@@ -69,6 +69,18 @@ public class Schedule {
 	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
 	}
+	
+	public String[] toArray() {
+		String[] movieData = new String[7];
+		movieData[0] = this.movie.getTitle();
+		movieData[1] = this.threatre.getCinema().getName();
+		movieData[2] = this.threatre.getName();
+		movieData[3] = this.startTime.toString();
+		movieData[4] = this.endTime.toString();
+		movieData[5] = this.publicDate.toString();
+		movieData[6] = this.movie.getDuration();
+		return movieData;
+	}
 
 	@Override
 	public String toString() {

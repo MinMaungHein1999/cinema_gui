@@ -17,6 +17,7 @@ public class MovieDao extends AbstractDao<Movie>{
 	public MovieDao() {
 		this.connectionFactory = new PgSqlConnectionFactory();
 	}
+	 
 
 	@Override
 	public String getTableName() {

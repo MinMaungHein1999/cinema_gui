@@ -23,6 +23,7 @@ public class CinemaDao extends AbstractDao<Cinema>{
 		return "cinemas";
 	}
 
+
 	@Override
 	public Cinema convertToObject(ResultSet resultSet) throws SQLException {
 		Cinema cinema = new Cinema();
