@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cinema.database.PgSqlConnectionFactory;
+import com.cinema.model.Seat;
 
 public abstract class AbstractDao<T> {
 
@@ -29,6 +30,7 @@ public abstract class AbstractDao<T> {
 
 	public T findbyId(int id) {
 		String query = "select * from " + getTableName() + " where id = ?";
+		
 		T object = null;
 		try {
 			Connection connection = this.connectionFactory.createConnection();
@@ -92,5 +94,4 @@ public abstract class AbstractDao<T> {
 			this.connectionFactory.closeConnection();
 		}
 	}
-
 }

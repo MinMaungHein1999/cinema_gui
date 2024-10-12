@@ -47,4 +47,12 @@ public class Seat {
 		this.theatre = theatre;
 	}
 
+	public String[] toArray() {
+		String[] arr = new String[3];
+		arr[0] = this.id+"";
+		arr[1] = this.title;
+		arr[2] = this.getTheatre().getId()+"";
+		return arr;
+	}
+
 }

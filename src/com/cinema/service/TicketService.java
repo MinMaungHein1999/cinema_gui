@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import com.cinema.dao.AbstractDao;
 import com.cinema.dao.TicketDao;
-import com.cinema.dao.SeatDao;
+import com.cinema.dao.SeatDaoImpl;
 import com.cinema.dao.CustomerDao;
 import com.cinema.dao.ScheduleDao;
 import com.cinema.model.Customer;
@@ -26,7 +26,7 @@ public class TicketService extends BaseService<Ticket>{
 	public TicketService() {
 		super(ticketDao);
 		this.customerDao = new CustomerDao();
-		this.seatDao = new SeatDao();
+		this.seatDao = new SeatDaoImpl();
 		this.scheduleDao = new ScheduleDao();
 		this.customerService = new CustomerService();
 		this.seatService = new SeatService();

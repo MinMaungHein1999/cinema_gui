@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cinema.database.PgSqlConnectionFactory;
+import com.cinema.model.Cinema;
+import com.cinema.model.Seat;
 import com.cinema.model.Theatre;
 
 public class TheatreDao extends AbstractDao<Theatre> {
 	
 	private PgSqlConnectionFactory connectionFactory;
-	private CinemaDao cinemaDao;
+	private AbstractDao<Cinema> cinemaDao;
 	
 	public TheatreDao() {
 		this.connectionFactory = new PgSqlConnectionFactory();
@@ -27,7 +29,7 @@ public class TheatreDao extends AbstractDao<Theatre> {
 
 	@Override
 	public Theatre convertToObject(ResultSet resultSet) throws SQLException {
-		
+			
 			Theatre threatre = new Theatre();
 			threatre.setId(resultSet.getInt("id"));
 			threatre.setName(resultSet.getString("name"));
@@ -35,7 +37,7 @@ public class TheatreDao extends AbstractDao<Theatre> {
 			threatre.setCinema(this.cinemaDao.findbyId(cinema_id));
 			return threatre;
 	}
-
+	
 	@Override
 	public String getInsertValues() {
 		return "(name, cinema_id) values (?, ?)";

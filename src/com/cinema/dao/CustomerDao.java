@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.cinema.database.PgSqlConnectionFactory;
 import com.cinema.model.Customer;
+import com.cinema.model.Seat;
 
 public class CustomerDao extends AbstractDao<Customer> {
 	
@@ -41,5 +42,4 @@ public class CustomerDao extends AbstractDao<Customer> {
 	public void setParameters(PreparedStatement preparedStatement, Customer entity) throws SQLException {
 		preparedStatement.setString(1, entity.getName());
 	}
-
 }

@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import com.cinema.dao.AbstractDao;
-import com.cinema.dao.SeatDao;
+import com.cinema.dao.SeatDaoImpl;
 import com.cinema.dao.TheatreDao;
 import com.cinema.model.Seat;
 import com.cinema.model.Theatre;
 
 public class SeatService extends BaseService<Seat>{
 	
-	private static AbstractDao<Seat> seatDao = new SeatDao();
+	private static AbstractDao<Seat> seatDao = new SeatDaoImpl();
 	private TheatreService theatreService;
 	
 	public SeatService() {

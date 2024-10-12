@@ -20,7 +20,7 @@ public class TicketDao extends AbstractDao<Ticket> {
 	public TicketDao() {
 		this.customerDao = new CustomerDao();
 		this.scheduleDao = new ScheduleDao();
-		this.seatDao = new SeatDao();
+		this.seatDao = new SeatDaoImpl();
 	}
 	
 	@Override

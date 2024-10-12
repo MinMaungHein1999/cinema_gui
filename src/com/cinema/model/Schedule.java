@@ -71,14 +71,15 @@ public class Schedule {
 	}
 	
 	public String[] toArray() {
-		String[] movieData = new String[7];
-		movieData[0] = this.movie.getTitle();
-		movieData[1] = this.threatre.getCinema().getName();
-		movieData[2] = this.threatre.getName();
-		movieData[3] = this.startTime.toString();
-		movieData[4] = this.endTime.toString();
-		movieData[5] = this.publicDate.toString();
-		movieData[6] = this.movie.getDuration();
+		String[] movieData = new String[8];
+		movieData[0] = this.id+"";
+		movieData[1] = this.movie.getTitle();
+		movieData[2] = this.threatre.getCinema().getName();
+		movieData[3] = this.threatre.getName();
+		movieData[4] = this.startTime.toString();
+		movieData[5] = this.endTime.toString();
+		movieData[6] = this.publicDate.toString();
+		movieData[7] = this.movie.getDuration();
 		return movieData;
 	}
 
