@@ -29,17 +29,21 @@ public class CustomerDao extends AbstractDao<Customer> {
 			Customer customer = new Customer();
 			customer.setId(resultSet.getInt("id"));
 			customer.setName(resultSet.getString("name"));
+			customer.setEmail(resultSet.getString("email"));
+			customer.setAddress(resultSet.getString("address"));
 			return customer;
 		
 	}
 
 	@Override
 	public String getInsertValues() {
-		return "(name) values (?)";
+		return "(name, email, address) values (?,?,?)";
 	}
 
 	@Override
 	public void setParameters(PreparedStatement preparedStatement, Customer entity) throws SQLException {
 		preparedStatement.setString(1, entity.getName());
+		preparedStatement.setString(2, entity.getEmail());
+		preparedStatement.setString(3, entity.getAddress());
 	}
 }

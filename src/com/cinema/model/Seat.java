@@ -55,4 +55,12 @@ public class Seat {
 		return arr;
 	}
 
+	public boolean isNormal() {
+		return this.seatType.equalsIgnoreCase("normal");
+	}
+	
+	public boolean isVIP() {
+		return this.seatType.equalsIgnoreCase("vip");
+	}
+
 }

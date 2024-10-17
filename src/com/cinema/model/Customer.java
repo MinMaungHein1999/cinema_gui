@@ -6,8 +6,21 @@ import java.util.List;
 public class Customer {
 	private int id;
 	private String name;
+	private String email;
+	private String address;
+	
 	private List<Ticket> tickets = new ArrayList<Ticket>();
 	
+	public Customer() {
+		
+	}
+	
+	public Customer(String name, String email, String address) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.address = address;
+	}
 	public int getId() {
 		return id;
 	}
@@ -30,5 +43,21 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [id=" + id + ", name=" + name +"]";
+	}
+	public String[] toArray() {
+		String[] customerArr = { this.id+"", this.name, this.email, this.address };
+		return customerArr;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

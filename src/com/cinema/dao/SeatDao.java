@@ -7,5 +7,5 @@ import com.cinema.model.Seat;
 
 public abstract class SeatDao extends AbstractDao<Seat>{
 	
-	public abstract List<Seat> getAllSeatByTheatre(int id) throws SQLException;
+	public abstract List<Seat> getAllSeatByTheatre(int id);
 }
