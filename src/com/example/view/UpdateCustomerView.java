@@ -42,7 +42,7 @@ public class UpdateCustomerView {
 		this.customer = this.customerDao.findbyId(customerId);
 		initializeComponent();
 		this.parentFrame = parentFrame;
-		this.customerUpdateFrame.setSize(500, 250);
+		this.customerUpdateFrame.setSize(300, 250);
 		this.customerUpdateFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.customerUpdateFrame.setLocationRelativeTo(null);
 		this.customerUpdateFrame.setVisible(true);

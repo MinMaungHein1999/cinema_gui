@@ -1,11 +1,13 @@
 package com.example.view;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
@@ -25,6 +27,9 @@ public class BookingPage {
 	private JTable moviesTable;
 	private JScrollPane scrollPane;
 	private JButton bookingBtn;
+	private JButton createScheduleBtn;
+	private JButton editScheduleBtn;
+	private JButton deleteScheduleBtn;
 	private String[] columns = {"id", "Movie Title", "Cinema Name", "Theatre Name", "Start Time", "End Time", "Public Date", "Duration"};
 	
 	public BookingPage() {
@@ -48,8 +53,18 @@ public class BookingPage {
 		this.bookingframe.add(this.scrollPane, BorderLayout.CENTER);
 		
 		this.bookingBtn = new JButton("Select Movie & Book Seat");
-		this.bookingframe.add(bookingBtn, BorderLayout.SOUTH);
+		this.createScheduleBtn = new JButton("Create");
+		this.editScheduleBtn = new JButton("Edit");
+		this.deleteScheduleBtn = new JButton("Delete");
+		JPanel btnPanel = new JPanel();
+		btnPanel.setLayout(new GridLayout(1,4));
+		btnPanel.add(bookingBtn);
+		btnPanel.add(createScheduleBtn);
+		btnPanel.add(editScheduleBtn);
+		btnPanel.add(deleteScheduleBtn);
+		this.bookingframe.add(btnPanel, BorderLayout.SOUTH);
 		selectMovieForBookingAction();
+		addActionCreateBtn();
 		this.bookingframe.setLocationRelativeTo(null);
 		this.bookingframe.setVisible(true);
 	}
@@ -67,6 +82,19 @@ public class BookingPage {
 		}
 		
 		return moviesData;
+	}
+	
+	private void addActionCreateBtn() {
+		this.createScheduleBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				new CreateMovieSchedulePage();
+				
+			}
+			
+		});
 	}
 	
 	private void selectMovieForBookingAction() {

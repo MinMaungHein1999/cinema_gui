@@ -66,11 +66,34 @@ public class CustomerListingView {
         // Add button actions
         addCreateBtnAction();
         addEditBtnAction();
+        addDeleteBtnAction();
 
         // Add components to frame
         customerListingFrame.add(btnPanel, BorderLayout.SOUTH);
         customerListingFrame.setVisible(true);
     }
+    
+    private void addDeleteBtnAction() {
+    	this.deleteBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteBtnAction();
+			}
+    	});
+    }
+    
+    private void deleteBtnAction() {
+    	int selectedRowIndex = this.customerTable.getSelectedRow();
+        if (selectedRowIndex >= 0) {
+            int customerId = Integer.parseInt(this.tableModel.getValueAt(selectedRowIndex, 0).toString());
+            this.customerDao.delete(customerId);
+            this.refreshCustomerTable();
+            JOptionPane.showMessageDialog(null, "Successfully Deleted!!!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Please select a customer to delete.");
+        }
+		
+	}
 
     private void addCreateBtnAction() {
         this.createBtn.addActionListener(new ActionListener() {
