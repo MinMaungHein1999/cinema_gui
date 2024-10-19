@@ -61,4 +61,18 @@ public class ScheduleDao extends AbstractDao<Schedule>{
 		preparedStatement.setDate(5, entity.getPublicDate());
 	}
 
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Schedule entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public String getUpdateQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

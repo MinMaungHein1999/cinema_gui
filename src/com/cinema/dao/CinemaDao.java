@@ -49,4 +49,16 @@ public class CinemaDao extends AbstractDao<Cinema>{
 		}
 	}
 
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Cinema entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getUpdateQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

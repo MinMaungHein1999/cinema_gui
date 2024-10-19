@@ -20,7 +20,7 @@ import com.cinema.model.Customer;
 
 public class UpdateCustomerView {
 	private AbstractDao<Customer> customerDao;
-	private JFrame customerCreateFrame;
+	private JFrame customerUpdateFrame;
 	private JPanel registerPanel;
 	private JLabel customerNameLabel;
 	private JTextField customerTextField;
@@ -42,15 +42,15 @@ public class UpdateCustomerView {
 		this.customer = this.customerDao.findbyId(customerId);
 		initializeComponent();
 		this.parentFrame = parentFrame;
-		this.customerCreateFrame.setSize(500, 250);
-		this.customerCreateFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.customerCreateFrame.setLocationRelativeTo(null);
-		this.customerCreateFrame.setVisible(true);
+		this.customerUpdateFrame.setSize(500, 250);
+		this.customerUpdateFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.customerUpdateFrame.setLocationRelativeTo(null);
+		this.customerUpdateFrame.setVisible(true);
 	}
 
 	private void initializeComponent() {
-		this.customerCreateFrame = new JFrame("Customer Update Form");
-		this.customerCreateFrame.setLayout(new BorderLayout());
+		this.customerUpdateFrame = new JFrame("Customer Update Form");
+		this.customerUpdateFrame.setLayout(new BorderLayout());
 		
 		this.createBtn = new JButton("Update");
 		this.cancleBtn = new JButton("Reset");
@@ -81,7 +81,7 @@ public class UpdateCustomerView {
 		this.registerPanel.add(this.createBtn);
 		this.registerPanel.add(this.cancleBtn);
 		
-		this.customerCreateFrame.add(registerPanel, BorderLayout.NORTH);
+		this.customerUpdateFrame.add(registerPanel, BorderLayout.NORTH);
 		
 		addActionRegisterBtn();
 	}
@@ -91,23 +91,23 @@ public class UpdateCustomerView {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				customerRegisterAction();
+				customerUpdateAction();
 			}
 		});
 	}
 	
-	private void customerRegisterAction() {
+	private void customerUpdateAction() {
 		
 		String address = this.customerAddressTextField.getText();
 		String name = this.customerTextField.getText();
 		String email = this.customerEmailTextField.getText();
 		
-		Customer customer = new Customer(name, email, address);
+		Customer customer = new Customer(this.customer.getId(), name, email, address);
 		
-		this.customerDao.create(customer);
+		this.customerDao.update(customer);
 		
-		JOptionPane.showMessageDialog(this.customerCreateFrame, "Customer Successfully Created!!!");
+		JOptionPane.showMessageDialog(this.customerUpdateFrame, "Customer Successfully Updated!!!");
 		this.parentFrame.refreshCustomerTable();
-		this.customerCreateFrame.dispose();
+		this.customerUpdateFrame.dispose();
 	}
 }

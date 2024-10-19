@@ -40,7 +40,7 @@ public class CustomerCreatePage {
 		initializeComponent();
 		this.parentFrame = parentFrame;
 		this.customerCreateFrame.setSize(500, 250);
-		this.customerCreateFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.customerCreateFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.customerCreateFrame.setLocationRelativeTo(null);
 		this.customerCreateFrame.setVisible(true);
 	}

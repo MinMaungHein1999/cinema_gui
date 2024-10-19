@@ -48,4 +48,16 @@ public class TheatreDao extends AbstractDao<Theatre> {
 		preparedStatement.setString(1, entity.getName());
 		preparedStatement.setInt(2, entity.getCinema().getId());
 	}
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Theatre entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getUpdateQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

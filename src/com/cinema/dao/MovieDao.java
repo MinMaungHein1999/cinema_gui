@@ -46,4 +46,18 @@ public class MovieDao extends AbstractDao<Movie>{
 		
 	}
 
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Movie entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public String getUpdateQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

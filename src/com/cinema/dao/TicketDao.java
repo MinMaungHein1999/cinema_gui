@@ -64,4 +64,16 @@ public class TicketDao extends AbstractDao<Ticket> {
 		preparedStatement.setInt(4, entity.getSchedule().getId());
 	}
 
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Ticket entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getUpdateQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -69,4 +69,16 @@ public class SeatDaoImpl extends SeatDao {
 		preparedStatement.setString(1, entity.getTitle());
 		preparedStatement.setInt(2, entity.getTheatre().getId());
 	}
+
+	@Override
+	public void setUpdateParameters(PreparedStatement preparedStatement, Seat entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getUpdateQuery() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

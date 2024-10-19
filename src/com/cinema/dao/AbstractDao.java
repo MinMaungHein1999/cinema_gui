@@ -14,12 +14,16 @@ public abstract class AbstractDao<T> {
 	public AbstractDao() {
 		this.connectionFactory = new PgSqlConnectionFactory();
 	}
+	
+	public abstract void setUpdateParameters(PreparedStatement preparedStatement, T entity);
 
 	public abstract String getTableName();
 
 	public abstract T convertToObject(ResultSet resultSet) throws SQLException;
 
 	public abstract String getInsertValues();
+	
+	public abstract String getUpdateQuery();
 
 	public abstract void setParameters(PreparedStatement preparedStatement, T entity) throws SQLException;
 
@@ -50,7 +54,7 @@ public abstract class AbstractDao<T> {
 
 	public List<T> getAll() {
 		List<T> objects = new ArrayList<>();
-		String query = "select * from " + this.getTableName();
+		String query = "select * from " + this.getTableName()+ " order by id desc";
 		try {
 			Connection connection = this.connectionFactory.createConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -79,6 +83,21 @@ public abstract class AbstractDao<T> {
 		}finally {
 			this.connectionFactory.closeConnection();
 		}
+	}
+	
+	public void update(T entity) {
+		try {
+		String updateQuery = this.getUpdateQuery();
+		Connection connection = this.connectionFactory.createConnection();
+		PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+		this.setUpdateParameters(preparedStatement, entity);
+		preparedStatement.executeUpdate();
+		} catch(SQLException e) {
+			System.out.print(e.getMessage());
+		} finally {
+			this.connectionFactory.closeConnection();
+		}
+		
 	}
 
 	public void delete(int id){
