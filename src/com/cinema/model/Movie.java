@@ -23,10 +23,15 @@ public class Movie {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
+	public String[] toArray(){
+		String[] movieArr = {this.id+"", this.title, this.duration};
+		return movieArr;
+	}
 	
 	@Override
 	public String toString() {
-		return "Movie [id=" + id + ", title=" + title + ", duration=" + duration + "]";
+		return this.title+" - "+ this.id+" ("+this.duration+")";
 	}
 
 }

@@ -20,6 +20,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+
 public class BookingPage {
 	
 	private AbstractDao<Schedule> scheduleDao;
@@ -40,7 +41,7 @@ public class BookingPage {
 	}
 	
 	private void initializeComponents() {
-		this.bookingframe = new JFrame("Movie Booking");
+		this.bookingframe = new JFrame("Movie Schedule Listing");
 		this.bookingframe.setSize(800, 500);
 		this.bookingframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.bookingframe.setLayout(new BorderLayout());
@@ -65,7 +66,7 @@ public class BookingPage {
 		this.bookingframe.add(btnPanel, BorderLayout.SOUTH);
 		selectMovieForBookingAction();
 		addActionCreateBtn();
-		this.bookingframe.setLocationRelativeTo(null);
+		this.bookingframe.setLocation(100, 100);
 		this.bookingframe.setVisible(true);
 	}
 	
