@@ -1,8 +1,6 @@
 package com.example.view;
 
-import com.cinema.dao.AbstractDao;
-import com.cinema.dao.CinemaDaoImpl;
-import com.cinema.dao.MovieDao;
+import com.cinema.dao.*;
 import com.cinema.model.Movie;
 
 import java.awt.Cursor;
@@ -11,14 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
 
 import com.cinema.model.Cinema;
+import com.cinema.model.Schedule;
+import com.cinema.model.Theatre;
+import com.cinema.util.DateConverter;
+import com.cinema.util.TimeConverter;
 
 public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	private AbstractDao<Movie> movieDao;
 	private AbstractDao<Cinema> cinemaDao;
+	private TheatreDaoImpl theatreDao;
+	private AbstractDao<Schedule> scheduleDao;
+
 	private JLabel movieLabel;
 	private JLabel movieLink;
 	
@@ -39,25 +47,52 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	
 	private JButton createBtn;
 	private JButton resetBtn;
-
+	private BookingPage parentFrame;
 	private Movie movie;
+	private Theatre theatre;
 
 
 
 	private Cinema cinema;
 	
-	public CreateMovieSchedulePage() {
+	public CreateMovieSchedulePage(BookingPage parentFrame) {
+		this.parentFrame = parentFrame;
+		this.theatreDao = new TheatreDaoImpl();
 		this.movieDao = new MovieDao();
 		this.cinemaDao = new CinemaDaoImpl();
-
+		this.scheduleDao = new ScheduleDao();
 		this.initializeComponent();
 	}
 	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		
+		if(e.getSource() == this.createBtn) {
+			this.createBtnAction();
+		}
+	}
+
+	private void createBtnAction(){
+		Schedule schedule = new Schedule();
+
+		schedule.setMovie(this.movie);
+		schedule.setThreatre(this.theatre);
+
+		String startTime = this.startTimeField.getText();
+		schedule.setStartTime(TimeConverter.toSqlTime(startTime));
+
+		String endTimeStr = this.endTimeField.getText();
+		schedule.setEndTime(TimeConverter.toSqlTime(endTimeStr));
+
+		String publicDate = this.publicDateField.getText();
+		schedule.setPublicDate(DateConverter.toSqlDate(publicDate));
+
+		this.scheduleDao.create(schedule);
+
+		JOptionPane.showMessageDialog(this, "Movie Schedule Successfully Created!!!!");
+		this.parentFrame.refreshMovieScheduleListingTable();
+
+		this.dispose();
 	}
 	
 	public void prepareCinemaLabel() {
@@ -74,7 +109,7 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	}
 	public void prepareTheatreLabel() {
 		this.theatreLabel = new JLabel("Theatre:");
-		this.theatreLink = new JLabel("<html><a href=''>Select Theatre</html>");
+		this.theatreLink = new JLabel(this.getSelectedTheatreLabel());
 		this.theatreLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.theatreLink.addMouseListener(new MouseAdapter() {
 			@Override
@@ -87,7 +122,7 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	public void openTheatreListingPage(){
 		this.validateSelectedCinema();
 		if(this.cinema != null){
-			new TheatreListingPage(this);
+			new TheatreListingPage(this, "create");
 		}
 	}
 
@@ -98,7 +133,7 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	}
 
 	public void openCinemaListingPage(){
-		new CinemaListingPage(this);
+		new CinemaListingPage(this, "create");
 	}
 
 	public String getSelectedMovieLabel(){
@@ -106,6 +141,14 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 			return "<html><a href=''>Select Movie</html>";
 		}else{
 			return "<html><a href=''>"+this.movie+"</html>";
+		}
+	}
+
+	public String getSelectedTheatreLabel(){
+		if(this.theatre != null){
+			return "<html><a href=''>"+this.theatre+"</html>";
+		}else{
+			return "<html><a href=''>Select Theatre</html>";
 		}
 	}
 
@@ -149,6 +192,8 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 		
 		this.createBtn = new JButton("Create");
 		this.resetBtn = new JButton("Reset");
+
+		this.createBtn.addActionListener(this);
 		
 		addUIComponent();
 		
@@ -179,6 +224,11 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 		this.add(this.createBtn);
 		this.add(this.resetBtn);
 		
+	}
+
+	public void refreshSelectedTheatre(int selectedTheatreId){
+		this.theatre = this.theatreDao.findbyId(selectedTheatreId);
+		this.theatreLink.setText(this.getSelectedTheatreLabel());
 	}
 
 	public void refreshSelectedMovie(int movieId) {

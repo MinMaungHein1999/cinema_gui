@@ -21,9 +21,11 @@ public class TheatreListingPage extends JFrame implements ActionListener {
     private String[] theatreTableColumn;
     private Cinema cinema;
     private JFrame parentPage;
+    private String flag;
 
-    public TheatreListingPage(JFrame parentPage){
+    public TheatreListingPage(JFrame parentPage, String flag){
         this.theatreDao = new TheatreDaoImpl();
+        this.flag = flag;
         this.parentPage = parentPage;
         this.prepareSelectedCinema();
         this.initializeComponents();
@@ -36,7 +38,19 @@ public class TheatreListingPage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == this.selectBtn){
+            int selectedRow = this.theatreListingTable.getSelectedRow();
+            int selectedTheatreId= Integer.parseInt(this.theatresData[selectedRow][0]);
+            if(flag.equals("create")){
+                CreateMovieSchedulePage createMovieSchedulePage = (CreateMovieSchedulePage) this.parentPage;
+                createMovieSchedulePage.refreshSelectedTheatre(selectedTheatreId);
+            } else if (flag.equals("edit")) {
+                UpdateMovieScheduleForm updateMovieScheduleForm = (UpdateMovieScheduleForm) this.parentPage;
+                updateMovieScheduleForm.refreshSelectedTheatre(selectedTheatreId);
+            }
 
+            this.dispose();
+        }
     }
 
     private void loadDataToTable(){

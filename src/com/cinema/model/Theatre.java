@@ -42,6 +42,6 @@ public class Theatre {
 
 	@Override
 	public String toString() {
-		return "Theatre [id=" + id + ", name=" + name + ", cinema=" + cinema + "]";
+		return this.name+" - "+this.id;
 	}
 }
