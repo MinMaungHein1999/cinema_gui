@@ -18,7 +18,7 @@ public class SeatDaoImpl extends SeatDao {
 
 	public SeatDaoImpl() {
 		this.connectionFactory = new PgSqlConnectionFactory();
-		this.theatreDao = new TheatreDao();
+		this.theatreDao = new TheatreDaoImpl();
 	}
 
 	@Override

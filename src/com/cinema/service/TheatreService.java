@@ -1,16 +1,15 @@
 package com.cinema.service;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import com.cinema.dao.AbstractDao;
-import com.cinema.dao.TheatreDao;
+import com.cinema.dao.TheatreDaoImpl;
 import com.cinema.model.Cinema;
 import com.cinema.model.Theatre;
 
 public class TheatreService extends BaseService<Theatre>{
 	private CinemaService cinemaService;
-	private static AbstractDao<Theatre> theatreDao = new TheatreDao();
+	private static AbstractDao<Theatre> theatreDao = new TheatreDaoImpl();
 	
 	public TheatreService() {
 		super(theatreDao);

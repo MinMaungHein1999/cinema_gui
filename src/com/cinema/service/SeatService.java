@@ -1,11 +1,9 @@
 package com.cinema.service;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import com.cinema.dao.AbstractDao;
 import com.cinema.dao.SeatDaoImpl;
-import com.cinema.dao.TheatreDao;
 import com.cinema.model.Seat;
 import com.cinema.model.Theatre;
 

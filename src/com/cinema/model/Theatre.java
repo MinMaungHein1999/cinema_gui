@@ -35,6 +35,11 @@ public class Theatre {
 	public void setSeats(List<Seat> seats) {
 		this.seats = seats;
 	}
+
+	public String[] toArray(){
+		return new String[]{this.id+"", this.name};
+	}
+
 	@Override
 	public String toString() {
 		return "Theatre [id=" + id + ", name=" + name + ", cinema=" + cinema + "]";

@@ -1,7 +1,7 @@
 package com.example.view;
 
 import com.cinema.dao.AbstractDao;
-import com.cinema.dao.CinemaDao;
+import com.cinema.dao.CinemaDaoImpl;
 import com.cinema.dao.MovieDao;
 import com.cinema.model.Movie;
 
@@ -12,10 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
+
 import com.cinema.model.Cinema;
 
 public class CreateMovieSchedulePage extends JFrame implements ActionListener {
@@ -43,11 +41,14 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	private JButton resetBtn;
 
 	private Movie movie;
+
+
+
 	private Cinema cinema;
 	
 	public CreateMovieSchedulePage() {
 		this.movieDao = new MovieDao();
-		this.cinemaDao = new CinemaDao();
+		this.cinemaDao = new CinemaDaoImpl();
 
 		this.initializeComponent();
 	}
@@ -78,10 +79,22 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 		this.theatreLink.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("clicket select theatre!!!!");
+				openTheatreListingPage();
 			}
-			
 		});
+	}
+
+	public void openTheatreListingPage(){
+		this.validateSelectedCinema();
+		if(this.cinema != null){
+			new TheatreListingPage(this);
+		}
+	}
+
+	private void validateSelectedCinema() {
+		if(this.cinema == null){
+			JOptionPane.showMessageDialog(this, "Please Select a Cinema!!!");
+		}
 	}
 
 	public void openCinemaListingPage(){
@@ -184,5 +197,9 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 		}else{
 			return "<html><a href=''>"+this.cinema+"</html>";
 		}
+	}
+
+	public Cinema getCinema() {
+		return this.cinema;
 	}
 }

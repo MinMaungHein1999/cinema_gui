@@ -1,11 +1,8 @@
 package com.cinema.dao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.cinema.database.PgSqlConnectionFactory;
 import com.cinema.model.Movie;
@@ -21,7 +18,7 @@ public class ScheduleDao extends AbstractDao<Schedule>{
 	public ScheduleDao() {
 		this.connectionFactory = new PgSqlConnectionFactory();
 		this.movieDao = new MovieDao();
-		this.theatreDao = new TheatreDao();
+		this.theatreDao = new TheatreDaoImpl();
 	}
 
 

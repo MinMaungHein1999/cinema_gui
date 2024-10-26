@@ -2,7 +2,6 @@ package com.cinema.service;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.sql.Time;
 import com.cinema.dao.*;
 import com.cinema.dao.AbstractDao;
@@ -19,7 +18,7 @@ public class ScheduleService extends BaseService<Schedule> {
 	public ScheduleService() {
 		super(scheduleDao);
 		this.movieDao = new MovieDao();
-		this.theatreDao = new TheatreDao();
+		this.theatreDao = new TheatreDaoImpl();
 	}
 
 	@Override

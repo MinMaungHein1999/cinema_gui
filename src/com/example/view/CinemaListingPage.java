@@ -1,7 +1,7 @@
 package com.example.view;
 
 import com.cinema.dao.AbstractDao;
-import com.cinema.dao.CinemaDao;
+import com.cinema.dao.CinemaDaoImpl;
 import com.cinema.model.Cinema;
 
 import javax.swing.*;
@@ -10,8 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
-
 
 public class CinemaListingPage extends JFrame implements ActionListener {
     private AbstractDao<Cinema> cinemaDao;
@@ -24,7 +22,7 @@ public class CinemaListingPage extends JFrame implements ActionListener {
 
     public CinemaListingPage(JFrame parentPage){
         this.parentPage = parentPage;
-        this.cinemaDao = new CinemaDao();
+        this.cinemaDao = new CinemaDaoImpl();
         this.setLayout(new BorderLayout());
         initializeBtnComponent();
         initializeTableComponent();
