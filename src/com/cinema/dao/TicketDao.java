@@ -3,7 +3,6 @@ package com.cinema.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import com.cinema.model.Customer;
 import com.cinema.model.Schedule;
@@ -19,7 +18,7 @@ public class TicketDao extends AbstractDao<Ticket> {
 	
 	public TicketDao() {
 		this.customerDao = new CustomerDao();
-		this.scheduleDao = new ScheduleDao();
+		this.scheduleDao = new ScheduleDaoImpl();
 		this.seatDao = new SeatDaoImpl();
 	}
 	

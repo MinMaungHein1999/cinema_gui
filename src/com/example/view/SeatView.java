@@ -8,13 +8,11 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListModel;
 
-import com.cinema.dao.ScheduleDao;
+import com.cinema.dao.ScheduleDaoImpl;
 import com.cinema.dao.SeatDao;
 import com.cinema.dao.SeatDaoImpl;
 import com.cinema.model.Cinema;
@@ -37,7 +35,7 @@ public class SeatView {
 	private Movie movie;
 	
 	public SeatView(int scheduleId) throws SQLException {
-		this.scheduleDao = new ScheduleDao();
+		this.scheduleDao = new ScheduleDaoImpl();
 		this.seatDao = new SeatDaoImpl();
 		this.schedule = this.scheduleDao.findbyId(scheduleId);
 		this.cinema = schedule.getThreatre().getCinema();

@@ -20,7 +20,7 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
     private AbstractDao<Movie> movieDao;
     private AbstractDao<Cinema> cinemaDao;
     private TheatreDaoImpl theatreDao;
-    private AbstractDao<Schedule> scheduleDao;
+    private ScheduleDaoImpl scheduleDao;
 
     private JLabel movieLabel;
     private JLabel movieLink;
@@ -40,7 +40,7 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
     private JLabel publicDateLabel;
     private JTextField publicDateField;
 
-    private JButton createBtn;
+    private JButton updateBtn;
     private JButton resetBtn;
     private BookingPage parentFrame;
     private Movie movie;
@@ -56,7 +56,7 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
         this.theatreDao = new TheatreDaoImpl();
         this.movieDao = new MovieDao();
         this.cinemaDao = new CinemaDaoImpl();
-        this.scheduleDao = new ScheduleDao();
+        this.scheduleDao = new ScheduleDaoImpl();
         this.schedule = this.scheduleDao.findbyId(selectedRecordId);
 
         this.cinema = this.schedule.getThreatre().getCinema();
@@ -69,29 +69,28 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.createBtn) {
-            this.createBtnAction();
+        if(e.getSource() == this.updateBtn) {
+            this.updateBtnAction();
         }
     }
 
-    private void createBtnAction(){
-        Schedule schedule = new Schedule();
+    private void updateBtnAction(){
 
-        schedule.setMovie(this.movie);
-        schedule.setThreatre(this.theatre);
+        this.schedule.setMovie(this.movie);
+        this.schedule.setThreatre(this.theatre);
 
         String startTime = this.startTimeField.getText();
-        schedule.setStartTime(TimeConverter.toSqlTime(startTime));
+        this.schedule.setStartTime(TimeConverter.toSqlTime(startTime));
 
         String endTimeStr = this.endTimeField.getText();
-        schedule.setEndTime(TimeConverter.toSqlTime(endTimeStr));
+        this.schedule.setEndTime(TimeConverter.toSqlTime(endTimeStr));
 
         String publicDate = this.publicDateField.getText();
-        schedule.setPublicDate(DateConverter.toSqlDate(publicDate));
+        this.schedule.setPublicDate(DateConverter.toSqlDate(publicDate));
 
-        this.scheduleDao.create(schedule);
+        this.scheduleDao.update(this.schedule);
 
-        JOptionPane.showMessageDialog(this, "Movie Schedule Successfully Created!!!!");
+        JOptionPane.showMessageDialog(this, "Movie Schedule Successfully Updated!!!!");
         this.parentFrame.refreshMovieScheduleListingTable();
 
         this.dispose();
@@ -124,7 +123,7 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
     public void openTheatreListingPage(){
         this.validateSelectedCinema();
         if(this.cinema != null){
-            new TheatreListingPage(this, "edit");
+            new TheatreListingPage(this);
         }
     }
 
@@ -135,7 +134,7 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
     }
 
     public void openCinemaListingPage(){
-        new CinemaListingPage(this, "edit");
+        new CinemaListingPage(this);
     }
 
     public String getSelectedMovieLabel(){
@@ -192,10 +191,10 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
         this.publicDateLabel = new JLabel("Public Date:");
         this.publicDateField = new JTextField(this.schedule.getPublicDate().toString());
 
-        this.createBtn = new JButton("Update");
+        this.updateBtn = new JButton("Update");
         this.resetBtn = new JButton("Reset");
 
-        this.createBtn.addActionListener(this);
+        this.updateBtn.addActionListener(this);
 
         addUIComponent();
 
@@ -223,7 +222,7 @@ public class UpdateMovieScheduleForm extends JFrame implements ActionListener {
         this.add(this.publicDateLabel);
         this.add(this.publicDateField);
 
-        this.add(this.createBtn);
+        this.add(this.updateBtn);
         this.add(this.resetBtn);
 
     }

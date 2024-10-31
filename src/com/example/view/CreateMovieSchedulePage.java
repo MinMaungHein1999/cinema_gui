@@ -1,6 +1,7 @@
 package com.example.view;
 
 import com.cinema.dao.*;
+import com.cinema.error.CreateScheduleError;
 import com.cinema.model.Movie;
 
 import java.awt.Cursor;
@@ -9,15 +10,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
 
 import com.cinema.model.Cinema;
 import com.cinema.model.Schedule;
 import com.cinema.model.Theatre;
+import com.cinema.service.ScheduleCreateService;
 import com.cinema.util.DateConverter;
 import com.cinema.util.TimeConverter;
 
@@ -25,7 +24,8 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	private AbstractDao<Movie> movieDao;
 	private AbstractDao<Cinema> cinemaDao;
 	private TheatreDaoImpl theatreDao;
-	private AbstractDao<Schedule> scheduleDao;
+	private ScheduleDaoImpl scheduleDao;
+	private ScheduleCreateService scheduleCreateService;
 
 	private JLabel movieLabel;
 	private JLabel movieLink;
@@ -56,11 +56,12 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	private Cinema cinema;
 	
 	public CreateMovieSchedulePage(BookingPage parentFrame) {
+		this.scheduleCreateService = new ScheduleCreateService();
 		this.parentFrame = parentFrame;
 		this.theatreDao = new TheatreDaoImpl();
 		this.movieDao = new MovieDao();
 		this.cinemaDao = new CinemaDaoImpl();
-		this.scheduleDao = new ScheduleDao();
+		this.scheduleDao = new ScheduleDaoImpl();
 		this.initializeComponent();
 	}
 	
@@ -87,12 +88,15 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 		String publicDate = this.publicDateField.getText();
 		schedule.setPublicDate(DateConverter.toSqlDate(publicDate));
 
-		this.scheduleDao.create(schedule);
-
-		JOptionPane.showMessageDialog(this, "Movie Schedule Successfully Created!!!!");
-		this.parentFrame.refreshMovieScheduleListingTable();
-
-		this.dispose();
+		try {
+			this.scheduleCreateService.call(schedule);
+			JOptionPane.showMessageDialog(this, "Movie Schedule Successfully Created!!!!");
+			this.dispose();
+		}catch (CreateScheduleError e){
+			JOptionPane.showMessageDialog(this, e.getMessage());
+		}finally {
+			this.parentFrame.refreshMovieScheduleListingTable();
+		}
 	}
 	
 	public void prepareCinemaLabel() {
@@ -122,7 +126,7 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	public void openTheatreListingPage(){
 		this.validateSelectedCinema();
 		if(this.cinema != null){
-			new TheatreListingPage(this, "create");
+			new TheatreListingPage(this);
 		}
 	}
 
@@ -133,7 +137,7 @@ public class CreateMovieSchedulePage extends JFrame implements ActionListener {
 	}
 
 	public void openCinemaListingPage(){
-		new CinemaListingPage(this, "create");
+		new CinemaListingPage(this);
 	}
 
 	public String getSelectedMovieLabel(){

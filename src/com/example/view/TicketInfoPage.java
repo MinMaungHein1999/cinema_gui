@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import com.cinema.dao.TicketDao;
-import com.cinema.dao.ScheduleDao;
+import com.cinema.dao.ScheduleDaoImpl;
 import com.cinema.dao.CustomerDao;
 import com.cinema.dao.AbstractDao;
 import com.cinema.dao.SeatDaoImpl;
@@ -55,7 +55,7 @@ public class TicketInfoPage {
 	public TicketInfoPage(SeatView parentView, int seatId, int scheduleId) {
 		this.seatDao = new SeatDaoImpl();
 		this.customerDao = new CustomerDao();
-		this.scheduleDao = new ScheduleDao();
+		this.scheduleDao = new ScheduleDaoImpl();
 		this.ticketDao = new TicketDao();
 		this.seat = this.seatDao.findbyId(seatId);
 		this.schedule = this.scheduleDao.findbyId(scheduleId);

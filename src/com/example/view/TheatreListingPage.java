@@ -21,11 +21,9 @@ public class TheatreListingPage extends JFrame implements ActionListener {
     private String[] theatreTableColumn;
     private Cinema cinema;
     private JFrame parentPage;
-    private String flag;
 
-    public TheatreListingPage(JFrame parentPage, String flag){
+    public TheatreListingPage(JFrame parentPage){
         this.theatreDao = new TheatreDaoImpl();
-        this.flag = flag;
         this.parentPage = parentPage;
         this.prepareSelectedCinema();
         this.initializeComponents();
@@ -41,20 +39,18 @@ public class TheatreListingPage extends JFrame implements ActionListener {
         if(e.getSource() == this.selectBtn){
             int selectedRow = this.theatreListingTable.getSelectedRow();
             int selectedTheatreId= Integer.parseInt(this.theatresData[selectedRow][0]);
-            if(flag.equals("create")){
+            if(this.parentPage instanceof CreateMovieSchedulePage){
                 CreateMovieSchedulePage createMovieSchedulePage = (CreateMovieSchedulePage) this.parentPage;
                 createMovieSchedulePage.refreshSelectedTheatre(selectedTheatreId);
-            } else if (flag.equals("edit")) {
+            } else if(this.parentPage instanceof UpdateMovieScheduleForm) {
                 UpdateMovieScheduleForm updateMovieScheduleForm = (UpdateMovieScheduleForm) this.parentPage;
                 updateMovieScheduleForm.refreshSelectedTheatre(selectedTheatreId);
             }
-
             this.dispose();
         }
     }
 
     private void loadDataToTable(){
-        System.out.println("theatres Data : "+ this.theatresData.length);
         for(String[] row : this.theatresData){
             this.tableModel.addRow(row);
         }
@@ -79,8 +75,13 @@ public class TheatreListingPage extends JFrame implements ActionListener {
     }
 
     private void prepareSelectedCinema(){
-        CreateMovieSchedulePage createMovieSchedulePage = (CreateMovieSchedulePage) this.parentPage;
-        this.cinema = createMovieSchedulePage.getCinema();
+        if(this.parentPage instanceof CreateMovieSchedulePage ) {
+            CreateMovieSchedulePage createMovieSchedulePage = (CreateMovieSchedulePage) this.parentPage;
+            this.cinema = createMovieSchedulePage.getCinema();
+        }else if(this.parentPage instanceof  UpdateMovieScheduleForm){
+            UpdateMovieScheduleForm updateMovieScheduleForm = (UpdateMovieScheduleForm) this.parentPage;
+            this.cinema = updateMovieScheduleForm.getCinema();
+        }
     }
 
     private void prepareTheatresData(){

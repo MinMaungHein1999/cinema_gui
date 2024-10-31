@@ -15,7 +15,7 @@ import javax.swing.table.TableColumn;
 
 import com.cinema.dao.AbstractDao;
 import com.cinema.model.Schedule;
-import com.cinema.dao.ScheduleDao;
+import com.cinema.dao.ScheduleDaoImpl;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,7 +37,7 @@ public class BookingPage {
 
 	public BookingPage() {
 		System.out.println("calling constructor !!!!");
-		this.scheduleDao = new ScheduleDao();
+		this.scheduleDao = new ScheduleDaoImpl();
 		this.initializeComponents();
 		
 	}

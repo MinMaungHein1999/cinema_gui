@@ -19,30 +19,34 @@ public class MovieListingPage extends JFrame implements ActionListener {
     private String[] columns = {"Id", "Title", "Duration"};
     private String[][] movieDataTable;
     private JFrame parentPage;
+    private JScrollPane scrollPane;
 
     public MovieListingPage(JFrame parentPage){
         this.parentPage = parentPage;
         this.movieDao = new MovieDao();
-        initializeTableComponent();
         initializeComponent();
+        initializeTableComponent();
         this.setVisible(true);
 
     }
 
     private void initializeComponent(){
+
         this.selectMovieBtn = new JButton("Select Movie");
         this.setSize(600, 400);
         this.setLocation(100, 100);
+        this.setTitle("Movie Listing");
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.selectMovieBtn.addActionListener(this);
-        this.add(this.movieTable, BorderLayout.CENTER);
         this.add(this.selectMovieBtn, BorderLayout.SOUTH);
     }
 
     private void initializeTableComponent(){
         this.tableModel = new DefaultTableModel(null, columns);
         this.movieTable = new JTable(this.tableModel);
+        this.scrollPane = new JScrollPane(this.movieTable);
+        this.add(this.scrollPane, BorderLayout.CENTER);
         prepareMovieDataTable();
         this.loadMovieData();
     }
@@ -65,8 +69,14 @@ public class MovieListingPage extends JFrame implements ActionListener {
 
     private void selectBtnAction(){
         int movieId = getSelectedMovieId();
-        CreateMovieSchedulePage page = (CreateMovieSchedulePage) this.parentPage;
-        page.refreshSelectedMovie(movieId);
+        if(this.parentPage instanceof CreateMovieSchedulePage){
+            CreateMovieSchedulePage page = (CreateMovieSchedulePage) this.parentPage;
+            page.refreshSelectedMovie(movieId);
+        }else if(this.parentPage instanceof  UpdateMovieScheduleForm){
+            UpdateMovieScheduleForm page = (UpdateMovieScheduleForm) this.parentPage;
+            page.refreshSelectedMovie(movieId);
+        }
+
         this.dispose();
     }
 

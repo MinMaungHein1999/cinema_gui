@@ -21,17 +21,26 @@ public class LoginWindow {
 	private JLabel passLabel;
 	private JPasswordField passField;
 	private JButton loginButton;
-	private JButton resetButton;
+	private JButton signUpButton;
 
 	
 	public LoginWindow() {
 		initializeComponents();
 		setupLayout();
 		setupLoginButtonAction();
+		setupSignupAction();
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-	
+
+	private void setupSignupAction(){
+		this.signUpButton.addActionListener(e -> signUpBtnAction());
+	}
+
+	private void signUpBtnAction() {
+		new UserCreateForm();
+	}
+
 	private void setupLoginButtonAction() {
 		this.loginButton.addActionListener(new ActionListener() {
 
@@ -61,7 +70,7 @@ public class LoginWindow {
 		this.passLabel = new JLabel("Password:");
 		this.passField = new JPasswordField(15);
 		this.loginButton = new JButton("Login");
-		this.resetButton = new JButton("Reset");
+		this.signUpButton = new JButton("Sign Up");
 		
 	}
 	
@@ -98,7 +107,7 @@ public class LoginWindow {
 		
 		constraints.gridx = 1;
 		
-		frame.add(this.resetButton, constraints);
+		frame.add(this.signUpButton, constraints);
 	
 		
 	}
