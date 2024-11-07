@@ -3,8 +3,11 @@ package com.example.view;
 import com.cinema.dao.UserDaoImpl;
 import com.cinema.dao.UserRoleDao;
 import com.cinema.dao.UserRoleDaoImpl;
+import com.cinema.dto.UserDto;
+import com.cinema.error.RegistrationException;
 import com.cinema.model.User;
 import com.cinema.model.UserRole;
+import com.cinema.service.UserRegistrationService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserCreateForm extends JFrame {
-    private UserDaoImpl userDao;
+    private UserRegistrationService userRegistrationService;
     private UserRoleDaoImpl userRoleDao;
     private JLabel usernameLabel, emailLabel, passwordLabel, confirmPasswordLabel, userRoleLabel;
     private JTextField usernameTF, emailTF;
@@ -24,7 +27,7 @@ public class UserCreateForm extends JFrame {
 
     public UserCreateForm() {
         this.userRoleDao = new UserRoleDaoImpl();
-        this.userDao = new UserDaoImpl();
+        this.userRegistrationService = new UserRegistrationService();
         initializeComponents();
         initializeUIComponents();
         this.setLocationRelativeTo(null); // Center the form on the screen
@@ -120,11 +123,13 @@ public class UserCreateForm extends JFrame {
         String confirmPassword = new String(this.confirmPasswordTF.getPassword());
         UserRole selectedUserRole = (UserRole) this.userRoleBox.getSelectedItem();
 
-        User user = new User(username, password, email, selectedUserRole);
-
-        this.userDao.create(user);
-
-
+        UserDto userDto = new UserDto(username, email, password, confirmPassword, selectedUserRole);
+       try {
+           this.userRegistrationService.call(userDto);
+           JOptionPane.showMessageDialog(this, "Registration Successful!!!");
+       }catch (RegistrationException e){
+           JOptionPane.showMessageDialog(this, e.getMessage());
+       }
 
     }
 }

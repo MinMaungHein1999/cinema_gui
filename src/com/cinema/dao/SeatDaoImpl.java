@@ -14,7 +14,7 @@ import com.cinema.model.Theatre;
 public class SeatDaoImpl extends SeatDao {
 
 	private PgSqlConnectionFactory connectionFactory;
-	private AbstractDao<Theatre> theatreDao;
+	private TheatreDaoImpl theatreDao;
 
 	public SeatDaoImpl() {
 		this.connectionFactory = new PgSqlConnectionFactory();

@@ -2,6 +2,7 @@ package com.cinema.dao;
 
 import com.cinema.model.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -50,5 +51,47 @@ public class UserDaoImpl extends UserDao {
         preparedStatement.setString(2, entity.getEmail());
         preparedStatement.setString(3, entity.getPassword());
         preparedStatement.setInt(4, entity.getUserRole().getId());
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        String query = "select * from " + getTableName() + " where email = ?";
+
+        User user = null;
+        try {
+            Connection connection = this.connectionFactory.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = this.convertToObject(resultSet);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.connectionFactory.closeConnection();
+        }
+        return user;
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        String query = "select * from " + getTableName() + " where name = ?";
+
+        User user = null;
+        try {
+            Connection connection = this.connectionFactory.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = this.convertToObject(resultSet);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.connectionFactory.closeConnection();
+        }
+        return user;
     }
 }

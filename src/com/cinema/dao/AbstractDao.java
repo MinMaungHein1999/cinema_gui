@@ -9,7 +9,7 @@ import com.cinema.model.Seat;
 
 public abstract class AbstractDao<T> {
 
-	private PgSqlConnectionFactory connectionFactory;
+	public PgSqlConnectionFactory connectionFactory;
 
 	public AbstractDao() {
 		this.connectionFactory = new PgSqlConnectionFactory();
