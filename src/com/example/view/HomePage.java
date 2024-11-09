@@ -1,14 +1,14 @@
 package com.example.view;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import com.cinema.error.AuthenticationFail;
+import com.cinema.service.AuthenticationService;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class HomePage {
-	
+	private AuthenticationService authenticationService;
 	private JFrame homeFrame;
 	private JMenuBar menuBar;
 	private JMenu bookingsItem;
@@ -22,12 +22,18 @@ public class HomePage {
 	
 
 	public HomePage() {
-		initializeComponents();
-		homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		homeFrame.setLocation(0, 0);
-		homeFrame.setSize(700, 500);
-		homeFrame.setVisible(true);
-		
+		this.authenticationService = new AuthenticationService();
+		try {
+			this.authenticationService.validateLoginToken();
+			initializeComponents();
+			homeFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			homeFrame.setLocation(0, 0);
+			homeFrame.setSize(700, 500);
+			homeFrame.setVisible(true);
+		}catch (AuthenticationFail e){
+			JOptionPane.showMessageDialog(homeFrame, e.getMessage());
+			new LoginWindow();
+		}
 	}
 	
 	

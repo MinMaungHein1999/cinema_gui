@@ -4,6 +4,7 @@ public class User {
     private int id;
     private String username;
     private String password;
+    private String accessToken;
     private String email;
     private UserRole userRole;
 
@@ -67,4 +68,11 @@ public class User {
     }
 
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 }

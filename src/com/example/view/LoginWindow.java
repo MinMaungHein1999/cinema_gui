@@ -1,5 +1,9 @@
 package com.example.view;
 
+import com.cinema.dto.LoginDto;
+import com.cinema.error.AuthenticationFail;
+import com.cinema.service.AuthenticationService;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,7 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LoginWindow {
-	
+	private AuthenticationService authenticationService;
 	private JFrame frame;
 	private JLabel userLable;
 	private JTextField userTextField;
@@ -25,6 +29,7 @@ public class LoginWindow {
 
 	
 	public LoginWindow() {
+		this.authenticationService = new AuthenticationService();
 		initializeComponents();
 		setupLayout();
 		setupLoginButtonAction();
@@ -49,14 +54,17 @@ public class LoginWindow {
 				
 				String username = userTextField.getText(); 
 				String password = new String(passField.getPassword());
-				
-				if(username.equals("admin") && password.equals("password")) {
-					HomePage homepage = new HomePage();
+				LoginDto loginDto = new LoginDto();
+				loginDto.setPassword(password);
+				loginDto.setUserName(username);
+				try {
+					authenticationService.call(loginDto);
+					JOptionPane.showMessageDialog(frame, "Login Successful!!");
+					new HomePage();
 					frame.dispose();
-				}else {
-					JOptionPane.showMessageDialog(frame, "Invalid Username or password.!", "Error", JOptionPane.ERROR_MESSAGE);
+				}catch (AuthenticationFail e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
 			}
 			
 		});

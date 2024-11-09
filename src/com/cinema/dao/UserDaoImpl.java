@@ -94,4 +94,64 @@ public class UserDaoImpl extends UserDao {
         }
         return user;
     }
+
+
+    @Override
+    public User authenticate(String username, String hashPassword) {
+        String query = "select * from " + getTableName() + " where name = ? AND password = ?";
+
+        User user = null;
+        try {
+            Connection connection = this.connectionFactory.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, hashPassword);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = this.convertToObject(resultSet);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.connectionFactory.closeConnection();
+        }
+        return user;
+    }
+    @Override
+    public void updateToken(User user) {
+        try {
+            String updateQuery = "update "+this.getTableName()+" set access_token = ? where id = ?";
+            Connection connection = this.connectionFactory.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+            preparedStatement.setString(1, user.getAccessToken());
+            preparedStatement.setInt(2, user.getId());
+            preparedStatement.executeUpdate();
+        } catch(SQLException e) {
+            System.out.print(e.getMessage());
+        } finally {
+            this.connectionFactory.closeConnection();
+        }
+    }
+
+    @Override
+    public User findUserByUserNameANDToken(User currentUser) {
+        String query = "select * from " + getTableName() + " where name = ? AND access_token = ?";
+
+        User user = null;
+        try {
+            Connection connection = this.connectionFactory.createConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, currentUser.getUsername());
+            preparedStatement.setString(2, currentUser.getAccessToken());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                user = this.convertToObject(resultSet);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            this.connectionFactory.closeConnection();
+        }
+        return user;
+    }
 }

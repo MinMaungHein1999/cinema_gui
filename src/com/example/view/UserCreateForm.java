@@ -127,6 +127,8 @@ public class UserCreateForm extends JFrame {
        try {
            this.userRegistrationService.call(userDto);
            JOptionPane.showMessageDialog(this, "Registration Successful!!!");
+           this.dispose();
+           new LoginWindow();
        }catch (RegistrationException e){
            JOptionPane.showMessageDialog(this, e.getMessage());
        }

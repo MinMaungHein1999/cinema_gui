@@ -42,7 +42,7 @@ public class UserRegistrationService {
         User user = UserConverter.convertToModel(this.userDto);
         this.userDao.create(user);
     }
-    
+
     public void checkEmail(){
         this.correctEmail();
         this.alreadyExistEmail();
